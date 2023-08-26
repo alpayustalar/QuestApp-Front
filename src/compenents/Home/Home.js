@@ -35,6 +35,7 @@ function Home() {
             )
     }, [])
 
+    
     if (error) {
         return <div> Error !!!</div>;
     } else if (!isLoaded) {

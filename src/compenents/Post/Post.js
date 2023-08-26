@@ -35,7 +35,7 @@ function Post(props) {
     const { title, text, userId, userName } = props;
     const classes = useStyles();
     const [expanded, setExpanded] = useState(false);
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(false); 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
@@ -43,6 +43,7 @@ function Post(props) {
     const handleLike = () => {
         setLiked(!liked);
     }
+
 
     return (
         <Card className={classes.root}>
