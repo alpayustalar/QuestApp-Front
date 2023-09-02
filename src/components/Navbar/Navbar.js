@@ -1,29 +1,39 @@
 import { AppBar, IconButton, Toolbar, Typography, makeStyles } from '@material-ui/core';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
+import { LockOpen } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
     menuButton: {
-        marginRight: theme.spacing(2), 
+        marginRight: theme.spacing(2),
     },
     title: {
         flexGrow: 1,
         textAlign: "left"
     },
     link: {
-        textDecoration : "none",
-        boxShadow : "none",
-        color : "white"
+        textDecoration: "none",
+        boxShadow: "none",
+        color: "white"
     }
 }));
 
 function Navbar() {
-    let userId = 5;
     const classes = useStyles();
+    let navigate = useNavigate();
+
+    const onClick = () => {
+        localStorage.removeItem("tokenKey")
+        localStorage.removeItem("currentUser")
+        localStorage.removeItem("refreshKey")
+        localStorage.removeItem("userName")
+        navigate.go(0)
+    }
+
     return (
         <div>
             <AppBar position="static">
@@ -35,7 +45,12 @@ function Navbar() {
                         <Link className={classes.link} to="/">Home</Link>
                     </Typography>
                     <Typography variant="h6">
-                        <Link className={classes.link} to={{ pathname: '/users/' + userId }}>User</Link>
+                        {localStorage.getItem("currentUser") == null ? <Link className={classes.link} to="/auth">Login/Register</Link> :
+
+                            <div><IconButton className={classes.link} onClick={onClick}><LockOpen></LockOpen></IconButton>
+                                <Link className={classes.link} to={{ pathname: '/users/' + localStorage.getItem("currentUser") }}>Profile</Link>
+                            </div>}
+
                     </Typography>
                 </Toolbar>
             </AppBar>
